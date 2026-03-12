@@ -62,12 +62,14 @@ class App(QMainWindow):
         # Показываем окно
         self.ui.show()
 
-    # Открыть страницу шифрования
-    def open_encode_page(self):
-        # Обновляем DDHH код
+    # Обновляем DDHH код
+    def update_ddtt_code(self):
         now = datetime.now()
         self.ui.encode_code.setText(f"{now.day:02}{now.hour:02}")
 
+    # Открыть страницу шифрования
+    def open_encode_page(self):
+        self.update_ddtt_code()
         self.ui.stackedWidget.setCurrentIndex(0)
 
     # Открыть страницу дешифрования
@@ -80,6 +82,8 @@ class App(QMainWindow):
 
     # Запуск шифрования
     def run_encode(self):
+        self.update_ddtt_code()
+
         # Проверяем глупость юзера
 
         data = self.ui.encode_source_te.toPlainText().strip()
@@ -102,12 +106,20 @@ class App(QMainWindow):
         if module < 128:
             warn_user("При модуле меньше 128 возможны коллизии (разные символы могут дать одинаковый шифр)")
 
-        result, err = self.enc.encode(data, code, module)
-        if err:
-            warn_user(f"Ошибка шифрования: {err}")
-            return
+        result = []
+        for line in data.split("\n"):
+            line = line.strip()
+            if line == "":
+                continue
 
-        self.ui.encode_result_te.setText(result)
+            encoded, err = self.enc.encode(line, code, module)
+            if err:
+                warn_user(f"Ошибка шифрования: {err}")
+                return
+
+            result.append(encoded)
+
+        self.ui.encode_result_te.setText("\n".join(result))
 
     # Запуск дешифрования
     def run_decode(self):
@@ -133,9 +145,17 @@ class App(QMainWindow):
             warn_user("DDTT код должен быть больше 0")
             return
 
-        result, err = self.enc.decode(data, code)
-        if err:
-            warn_user(f"Ошибка дешифрования: {err}")
-            return
+        result = []
+        for line in data.split("\n"):
+            line = line.strip()
+            if line == "":
+                continue
 
-        self.ui.decode_result_te.setText(result)
+            encoded, err = self.enc.decode(line, code)
+            if err:
+                warn_user(f"Ошибка дешифрования: {err}")
+                return
+
+            result.append(encoded)
+
+        self.ui.decode_result_te.setText("\n".join(result))
