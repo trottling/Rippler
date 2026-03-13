@@ -2,7 +2,7 @@ import hashlib
 from math import gcd
 
 
-class Enc:
+class Affine:
     __alphabet_map = { }
     __alphabet_list = []
 

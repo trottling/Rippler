@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication
 
 from src.app import App
 
-VERSION = "1.0.0"
+VERSION = "2.0.0"
 
 
 def main() -> None:
