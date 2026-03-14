@@ -4,12 +4,10 @@ from PyQt5.QtWidgets import QApplication
 
 from src.app import App
 
-VERSION = "2.0.0"
-
 
 def main() -> None:
     app = QApplication(sys.argv)
-    main_window = App(VERSION)
+    main_window = App()
     app.exec()
 
 

@@ -13,9 +13,8 @@ from src.utils import get_rel_path, warn_user
 
 
 class App(QMainWindow):
-    def __init__(self, version: str):
+    def __init__(self):
         super().__init__()
-        self.version = version
         self.ui = None
         self.affine_enc = Affine()
         self.huffman_enc = Huffman()
@@ -33,8 +32,8 @@ class App(QMainWindow):
         # Иконка окна
         self.ui.setWindowIcon(QIcon(get_rel_path("icon.ico")))
 
-        # Название и версия в названии окна
-        self.ui.setWindowTitle(f"Rippler v{self.version}")
+        # Название окна
+        self.ui.setWindowTitle(f"Rippler")
 
         # Начальная страница
         self.open_faq_page()
