@@ -229,7 +229,7 @@ class App(QMainWindow):
             return
 
         if len(code) < 4:
-            warn_user("Неполный DDTT код")
+            warn_user("Неполный DDTT код. Если день\месяц состоит из одной цифры - добавьте 0 вначале. Пример - 5 января => 0501.")
             return
 
         code = int(code)
