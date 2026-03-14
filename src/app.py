@@ -103,13 +103,13 @@ class App(QMainWindow):
         self.ui.show()
 
     # Обновляем affine DDHH код
-    def update_ddtt_code(self):
+    def update_ddhh_code(self):
         now = datetime.now()
         self.ui.affine_encode_code.setText(f"{now.day:02}{now.hour:02}")
 
     # Открыть страницу affine шифрования
     def open_affine_encode_page(self):
-        self.update_ddtt_code()
+        self.update_ddhh_code()
         self.ui.stackedWidget.setCurrentIndex(0)
 
     # Открыть страницу affine дешифрования
@@ -118,7 +118,7 @@ class App(QMainWindow):
 
     # Открыть страницу huffman шифрования
     def open_huffman_encode_page(self):
-        self.update_ddtt_code()
+        self.update_ddhh_code()
         self.ui.stackedWidget.setCurrentIndex(2)
 
     # Открыть страницу huffman дешифрования
@@ -173,7 +173,7 @@ class App(QMainWindow):
 
     # Запуск шифрования
     def affine_run_encode(self):
-        self.update_ddtt_code()
+        self.update_ddhh_code()
 
         # Проверяем глупость юзера
 
@@ -224,16 +224,16 @@ class App(QMainWindow):
         code = self.ui.affine_decode_code.text()
 
         if code == "":
-            warn_user("Пустой DDTT код")
+            warn_user("Пустой ddhh код")
             return
 
         if len(code) < 4:
-            warn_user("Неполный DDTT код. Если день\месяц состоит из одной цифры - добавьте 0 вначале. Пример - 5 января => 0501.")
+            warn_user("Неполный ddhh код. Если день\месяц состоит из одной цифры - добавьте 0 вначале. Пример - 5 января => 0501.")
             return
 
         code = int(code)
         if code == 0:
-            warn_user("DDTT код должен быть больше 0")
+            warn_user("ddhh код должен быть больше 0")
             return
 
         result = []
