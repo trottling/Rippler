@@ -94,7 +94,7 @@ class App(QMainWindow):
         self.ui.affine_decode_code.setValidator(QRegExpValidator(QRegExp(r"(0[1-9]|1[0-9]|2[0-9]|3[01])(0[0-9]|1[0-9]|2[0-3])")))
 
         # Валидатор модуля на странице affine шифрования
-        self.ui.affine_encode_module.setValidator(QIntValidator(1, 9999))
+        self.ui.affine_encode_module.setValidator(QIntValidator(128, 9999))
 
         # affine модуль по умолчанию
         self.ui.affine_encode_module.setText("128")
@@ -196,6 +196,7 @@ class App(QMainWindow):
 
         if module < 128:
             warn_user("При модуле меньше 128 возможны коллизии (разные символы могут дать одинаковый шифр)")
+            return
 
         result = []
         for line in data.replace(" ", "\n").split("\n"):
