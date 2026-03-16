@@ -33,7 +33,7 @@ class App(QMainWindow):
         self.ui.setWindowIcon(QIcon(get_rel_path("icon.ico")))
 
         # Название окна
-        self.ui.setWindowTitle(f"Rippler")
+        self.ui.setWindowTitle(f"Rippler | Дмитрий Шахматов & Никита Сенчук")
 
         # Начальная страница
         self.open_faq_page()
