@@ -132,7 +132,7 @@ jobs:
             --onefile `
             --windows-console-mode=disable `
             --include-windows-runtime-dlls=yes `
-            --enable-plugin=pyqt6 `
+            --enable-plugin=pyqt5 `
             --windows-icon-from-ico=assets/icon.ico `
             --output-filename=${{ steps.version.outputs.filename }} `
             --output-dir=dist `
