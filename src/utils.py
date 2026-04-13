@@ -1,8 +1,8 @@
 import os
 import sys
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox
+from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QMessageBox
 
 
 # get_rel_path - функция, для резолвинга путей к ассетам при запуске кода или бинаркника
@@ -18,6 +18,12 @@ def get_rel_path(data_path: str, slash_replace: bool = True) -> str:
         result = os.path.join(base_path, "", "..", "assets", data_path)
 
     return result.replace("\\", "/") if slash_replace else str(result)
+
+# load_app_version - получаем версию билда из assets/version.txt (устанавливается через workflow при сборке)
+def load_app_version() -> str:
+    with open(get_rel_path("version.txt"), "r") as f:
+        v = f.readline().strip()
+        return v if v else ""
 
 
 def warn_user(text: str):

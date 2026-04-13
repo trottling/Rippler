@@ -2,14 +2,14 @@ import os
 import shutil
 from datetime import datetime
 
-from PyQt5 import uic
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QIcon, QIntValidator, QRegExpValidator
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
+from PySide6.QtCore import QRegularExpression
+from PySide6.QtGui import QIcon, QIntValidator, QRegularExpressionValidator
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QApplication, QFileDialog, QMainWindow
 
 from src.affine_enc import Affine
 from src.huffman_enc import Huffman
-from src.utils import get_rel_path, warn_user
+from src.utils import get_rel_path, load_app_version, warn_user
 
 
 class App(QMainWindow):
@@ -24,7 +24,7 @@ class App(QMainWindow):
 
     def load_ui(self):
         # Грузим UI из .ui файла
-        self.ui = uic.loadUi(get_rel_path("app.ui"), self)
+        self.ui = QUiLoader().load(get_rel_path("app.ui"))
 
         # Размер окна
         self.ui.resize(600, 600)
@@ -33,7 +33,9 @@ class App(QMainWindow):
         self.ui.setWindowIcon(QIcon(get_rel_path("icon.ico")))
 
         # Название окна
-        self.ui.setWindowTitle(f"Rippler | Дмитрий Шахматов & Никита Сенчук")
+        version = load_app_version()
+        suffix = f" v{version}" if version else ""
+        self.ui.setWindowTitle(f"Rippler | Дмитрий Шахматов & Никита Сенчук {suffix}")
 
         # Начальная страница
         self.open_faq_page()
@@ -91,7 +93,7 @@ class App(QMainWindow):
         self.ui.huffman_decode_save.setEnabled(False)
 
         # Валидатор DDHH кода на странице affine дешифрования через regexp
-        self.ui.affine_decode_code.setValidator(QRegExpValidator(QRegExp(r"(0[1-9]|1[0-9]|2[0-9]|3[01])(0[0-9]|1[0-9]|2[0-3])")))
+        self.ui.affine_decode_code.setValidator(QRegularExpressionValidator(QRegularExpression(r"(0[1-9]|1[0-9]|2[0-9]|3[01])(0[0-9]|1[0-9]|2[0-3])")))
 
         # Валидатор модуля на странице affine шифрования
         self.ui.affine_encode_module.setValidator(QIntValidator(128, 9999))
